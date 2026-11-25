@@ -1,0 +1,65 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:c="/lib/credentials">
+  <f:entry title="${%SVN repository URL}" field="url">
+    <f:textbox clazz="required" placeholder="https://svn.example.com/repos"/>
+  </f:entry>
+
+  <f:section title="${%Authentication}">
+    <f:radioBlock name="authMode" value="credential" title="${%Jenkins credential}"
+                  checked="${instance != null &amp;&amp; instance.authMode == 'credential'}"
+                  inline="true">
+      <f:entry title="${%Credentials}" field="credentialsId">
+        <c:select/>
+      </f:entry>
+    </f:radioBlock>
+
+    <f:radioBlock name="authMode" value="inline" title="${%Username and password}"
+                  checked="${instance != null &amp;&amp; instance.authMode == 'inline'}"
+                  inline="true">
+      <f:entry title="${%Username}" field="username">
+        <f:textbox autoComplete="off"/>
+      </f:entry>
+      <f:entry title="${%Password}" field="password">
+        <f:password/>
+      </f:entry>
+    </f:radioBlock>
+
+    <f:radioBlock name="authMode" value="anonymous" title="${%Anonymous}"
+                  checked="${instance == null || instance.authMode == 'anonymous'}"
+                  inline="true">
+      <f:block>
+        <div class="jenkins-form-description">${%No credentials are sent to the SVN server.}</div>
+      </f:block>
+    </f:radioBlock>
+  </f:section>
+
+  <f:entry title="${%Source}" field="source">
+    <f:textbox clazz="required" placeholder="target/*.jar, dist"/>
+  </f:entry>
+
+  <f:entry title="${%Source exclude}" field="exclude">
+    <f:textbox placeholder="**/*.tmp"/>
+  </f:entry>
+
+  <f:entry title="${%Target}" field="target">
+    <f:combobox fillDependsOn="url,authMode,credentialsId,username,password,trustSsl"
+                placeholder="trunk/releases"/>
+  </f:entry>
+
+  <f:entry title="${%Target exclude}" field="targetExclude">
+    <f:textbox placeholder="**/*.tmp, keep/**"/>
+  </f:entry>
+
+  <f:entry title="${%Commit message}" field="commitMessage">
+    <f:textbox placeholder="Publish from build #${BUILD_NUMBER}"/>
+  </f:entry>
+
+  <f:advanced title="${%Advanced}">
+    <f:entry title="${%Clean target}" field="cleanup">
+      <f:checkbox/>
+    </f:entry>
+    <f:entry title="${%Trust SSL certificate}" field="trustSsl">
+      <f:checkbox/>
+    </f:entry>
+  </f:advanced>
+</j:jelly>

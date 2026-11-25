@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div xmlns:j="jelly:core">
+  This plugin publishes build artifacts to a Subversion repository.
+</div>

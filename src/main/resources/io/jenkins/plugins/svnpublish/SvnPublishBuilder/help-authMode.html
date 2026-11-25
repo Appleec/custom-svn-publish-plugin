@@ -1,0 +1,12 @@
+<div>
+  How to authenticate against the SVN server:
+  <ul>
+    <li><b>Jenkins credential</b> — pick a username/password credential stored in Jenkins
+        (Manage Jenkins &gt; Credentials). The list offers everything this job is allowed to read.</li>
+    <li><b>Username and password</b> — type the account directly in this form. The password is
+        stored encrypted in the job configuration; a stored credential is preferable.</li>
+    <li><b>Anonymous</b> — send no credentials at all.</li>
+  </ul>
+  The chosen mode also applies to the target-directory suggestions, so private repositories list
+  their sub-directories once the credential is selected.
+</div>

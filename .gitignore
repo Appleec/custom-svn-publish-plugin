@@ -1,0 +1,11 @@
+backup/
+target/
+work/
+docs/
+.git/
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project

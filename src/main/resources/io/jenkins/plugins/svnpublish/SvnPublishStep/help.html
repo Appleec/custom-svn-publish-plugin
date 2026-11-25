@@ -1,0 +1,17 @@
+<div>
+  Publishes workspace files to a Subversion repository in a single commit.
+  <dl>
+    <dt>url</dt>
+    <dd>SVN repository URL (target directory must already exist)</dd>
+    <dt>credentialsId</dt>
+    <dd>Optional Jenkins credential ID (username/password). Empty = anonymous.</dd>
+    <dt>source</dt>
+    <dd>Ant-style pattern of workspace files, e.g. <code>target/*.jar</code></dd>
+    <dt>target</dt>
+    <dd>Optional sub-path inside the repository, e.g. <code>releases/v1.0</code></dd>
+    <dt>commitMessage</dt>
+    <dd>Commit message (supports ${BUILD_NUMBER} style environment expansion)</dd>
+    <dt>cleanup</dt>
+    <dd>Delete target files no longer in the publish set (default false)</dd>
+  </dl>
+</div>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>6.2250.va_d01d559a_209</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>io.jenkins.plugins</groupId>
+  <artifactId>custom-svn-publish</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>hpi</packaging>
+
+  <name>Custom SVN Publish Plugin</name>
+  <description>Publishes build artifacts from the workspace to a Subversion repository after the build.</description>
+  <url>https://github.com/jenkinsci/custom-svn-publish-plugin</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <jenkins.baseline>2.479</jenkins.baseline>
+    <jenkins.version>${jenkins.baseline}.3</jenkins.version>
+    <!-- Version managed by bom-2.479.x -->
+    <bom.baseline>5054.v620b_5d2b_d5e6</bom.baseline>
+    <svnkit.version>1.10.11</svnkit.version>
+    <hpi.bundledArtifacts>antlr-runtime,eddsa,jna,jna-platform,jsch.agentproxy.connector-factory,jsch.agentproxy.core,jsch.agentproxy.pageant,jsch.agentproxy.sshagent,jsch.agentproxy.svnkit-trilead-ssh2,jsch.agentproxy.usocket-jna,jsch.agentproxy.usocket-nc,lz4-java,sequence-library,slf4j-api,sqljet,sshd-common,sshd-core,svnkit,trilead-ssh2</hpi.bundledArtifacts>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.jenkins.tools.bom</groupId>
+        <artifactId>bom-2.479.x</artifactId>
+        <version>${bom.baseline}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- Jenkins plugin dependencies -->
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>credentials</artifactId>
+      <!-- Older minimum: update centers resolve the newest credentials (needs core>=2.555),
+           which breaks dynamic install on 2.479.x cores. 1413 works with core>=2.479.1. -->
+      <version>1413.va_51c53703df1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-step-api</artifactId>
+    </dependency>
+
+    <!-- Bundled dependency: pure-Java SVN client.
+         jsch (svn+ssh support) is excluded to slim the plugin; http(s):// and file:// are supported. -->
+    <dependency>
+      <groupId>org.tmatesoft.svnkit</groupId>
+      <artifactId>svnkit</artifactId>
+      <version>${svnkit.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jcraft</groupId>
+          <artifactId>jsch</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
+</project>
